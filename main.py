@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 import random
+from datetime import datetime
 
 app = FastAPI()
 
@@ -17,6 +18,15 @@ async def get_random_number():
 async def health_check():
     """Health check endpoint"""
     return {"status": "healthy"}
+
+@app.get("/time")
+async def get_current_time():
+    """Returns the current time in ISO format"""
+    current_time = datetime.now()
+    return {
+        "current_time": current_time.isoformat(),
+        "formatted_time": current_time.strftime("%Y-%m-%d %H:%M:%S")
+    }
 
 if __name__ == "__main__":
     import uvicorn
